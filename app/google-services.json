@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "692933963863",
+    "project_id": "finalrpl-6cefe",
+    "storage_bucket": "finalrpl-6cefe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:692933963863:android:044c6aa65d066777ac3312",
+        "android_client_info": {
+          "package_name": "com.fahmiamaru.chatapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "692933963863-gkh9cuf8pimiibbfgri2taim7eg6ng9j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0xS5OpS_WcuqB4c9cc88o5U2eepgdxsc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "692933963863-gkh9cuf8pimiibbfgri2taim7eg6ng9j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
