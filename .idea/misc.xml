@@ -3,8 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Amikom/Semester 5/REKAYASA PERANGKAT LUNAK/FinalProject/ChatApp/app/src/main/res/drawable/rounded_layot.xml" value="0.240625" />
         <entry key="..\:/Amikom/Semester 5/REKAYASA PERANGKAT LUNAK/FinalProject/ChatApp/app/src/main/res/layout/activity_login.xml" value="0.22447916666666667" />
-        <entry key="..\:/Amikom/Semester 5/REKAYASA PERANGKAT LUNAK/FinalProject/ChatApp/app/src/main/res/layout/activity_register.xml" value="0.14673913043478262" />
+        <entry key="..\:/Amikom/Semester 5/REKAYASA PERANGKAT LUNAK/FinalProject/ChatApp/app/src/main/res/layout/activity_main.xml" value="0.22447916666666667" />
+        <entry key="..\:/Amikom/Semester 5/REKAYASA PERANGKAT LUNAK/FinalProject/ChatApp/app/src/main/res/layout/activity_register.xml" value="0.22" />
         <entry key="..\:/Amikom/Semester 5/REKAYASA PERANGKAT LUNAK/FinalProject/ChatApp/app/src/main/res/layout/activity_start.xml" value="0.22" />
         <entry key="..\:/Amikom/Semester 5/REKAYASA PERANGKAT LUNAK/FinalProject/ChatApp/app/src/main/res/layout/layout_bar.xml" value="0.22447916666666667" />
       </map>
