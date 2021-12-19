@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">ChatApp</string>
+    <string name="sign_in">Sign In</string>
+    <string name="chat_app">Chat App</string>
+    <string name="login">login</string>
+    <string name="register">Register</string>
+    <string name="logo">Logo</string>
+    <string name="create_new_account">Create New Account</string>
+    <string name="username">Username</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="dont_have">Don\'t have an account?</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="keep_me_sign_in">Keep me sign in?</string>
+    <string name="forgot_password">Forgot Password?</string>
 </resources>
