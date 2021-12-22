@@ -9,7 +9,8 @@
 
     <include
         android:id="@+id/toolbar"
-        layout="@layout/layout_bar" />
+        layout="@layout/layout_bar"
+        />
 
 
     <ImageView
@@ -37,40 +38,75 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:fontFamily="@font/preg"
             android:hint="@string/email"
             android:inputType="textEmailAddress"
-            android:fontFamily="@font/preg"/>
+            android:textColor="@color/black"
+            android:textColorHint="@color/grey" />
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:fontFamily="@font/preg"
             android:hint="@string/password"
             android:inputType="textPassword"
-            android:fontFamily="@font/preg"/>
+            android:textColor="@color/black"
+            android:textColorHint="@color/grey" />
 
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txt4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/preg"
+                android:text="@string/keep_me_sign_in"
+                android:textColor="@color/grey"
+                android:textSize="12sp" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/txt5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/preg"
+                android:text="@string/forgot_password"
+                android:textColor="@color/grey"
+                android:textSize="12sp" />
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/btn_login"
             android:layout_width="145dp"
             android:layout_height="40dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="5dp"
             android:background="@drawable/btn"
             android:fontFamily="@font/preg"
-            android:textColor="@color/button_hover"
-            android:text="@string/sign_in" />
+            android:text="@string/sign_in"
+            android:textColor="@color/button_hover" />
 
 
     </LinearLayout>
 
     <TextView
         android:id="@+id/txt3"
-        android:fontFamily="@font/preg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
         android:layout_marginTop="470dp"
+        android:fontFamily="@font/preg"
         android:text="@string/dont_have"
         android:textColor="@color/white"
         android:textSize="14sp" />
@@ -86,28 +122,6 @@
         android:textColor="@color/white"
         android:textSize="14sp" />
 
-    <TextView
-        android:id="@+id/txt4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="380dp"
-        android:text="@string/keep_me_sign_in"
-        android:textColor="@color/grey"
-        android:fontFamily="@font/preg"
-        android:textSize="12sp" />
-
-    <TextView
-        android:id="@+id/txt5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="380dp"
-        android:layout_toEndOf="@+id/txt4"
-        android:text="@string/forgot_password"
-        android:fontFamily="@font/preg"
-        android:textColor="@color/grey"
-        android:textSize="12sp" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

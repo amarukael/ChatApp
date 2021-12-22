@@ -43,14 +43,18 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:hint="@string/username"
+            android:textColor="@color/black"
+            android:textColorHint="@color/grey"
             android:fontFamily="@font/preg"/>
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/email"
             android:layout_width="match_parent"
+            android:textColorHint="@color/grey"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:hint="@string/email"
+            android:textColor="@color/black"
             android:inputType="textEmailAddress"
             android:fontFamily="@font/preg"/>
 
@@ -61,6 +65,8 @@
             android:layout_marginTop="10dp"
             android:hint="@string/password"
             android:inputType="textPassword"
+            android:textColorHint="@color/grey"
+            android:textColor="@color/black"
             android:fontFamily="@font/preg"/>
 
         <Button
