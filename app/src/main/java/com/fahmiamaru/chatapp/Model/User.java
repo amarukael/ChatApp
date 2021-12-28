@@ -1,17 +1,24 @@
 package com.fahmiamaru.chatapp.Model;
 
 public class User {
-    private String id;
-    private String username;
-    private String imageURL;
+    String id;
+    String Username;
+    String ImageURL;
+    String key;
 
-    public User(String id, String username, String imageURL) {
-        this.id = id;
-        this.username = username;
-        this.imageURL = imageURL;
+    public String getKey() {
+        return key;
     }
 
-    public User() {
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+
+    public User(String id, String Username, String ImageURL) {
+        this.id = id;
+        this.Username = Username;
+        this.ImageURL = ImageURL;
     }
 
     public String getId() {
@@ -23,18 +30,22 @@ public class User {
     }
 
     public String getUsername() {
-        return username;
+        return Username;
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        Username = username;
     }
 
     public String getImageURL() {
-        return imageURL;
+        return ImageURL;
     }
 
     public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
+        ImageURL = imageURL;
     }
+
+    public User() {
+    }
+
 }

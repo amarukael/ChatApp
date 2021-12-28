@@ -3,15 +3,21 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Amikom/Semester 5/REKAYASA PERANGKAT LUNAK/FinalProject/ChatApp/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.22205128205128205" />
         <entry key="..\:/Amikom/Semester 5/REKAYASA PERANGKAT LUNAK/FinalProject/ChatApp/app/src/main/res/drawable/btn.xml" value="0.22552083333333334" />
+        <entry key="..\:/Amikom/Semester 5/REKAYASA PERANGKAT LUNAK/FinalProject/ChatApp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.22205128205128205" />
         <entry key="..\:/Amikom/Semester 5/REKAYASA PERANGKAT LUNAK/FinalProject/ChatApp/app/src/main/res/drawable/rounded_corner.xml" value="0.22552083333333334" />
         <entry key="..\:/Amikom/Semester 5/REKAYASA PERANGKAT LUNAK/FinalProject/ChatApp/app/src/main/res/drawable/rounded_layot.xml" value="0.240625" />
         <entry key="..\:/Amikom/Semester 5/REKAYASA PERANGKAT LUNAK/FinalProject/ChatApp/app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="..\:/Amikom/Semester 5/REKAYASA PERANGKAT LUNAK/FinalProject/ChatApp/app/src/main/res/layout/activity_main.xml" value="0.22447916666666667" />
         <entry key="..\:/Amikom/Semester 5/REKAYASA PERANGKAT LUNAK/FinalProject/ChatApp/app/src/main/res/layout/activity_register.xml" value="0.22" />
         <entry key="..\:/Amikom/Semester 5/REKAYASA PERANGKAT LUNAK/FinalProject/ChatApp/app/src/main/res/layout/activity_start.xml" value="0.22" />
+        <entry key="..\:/Amikom/Semester 5/REKAYASA PERANGKAT LUNAK/FinalProject/ChatApp/app/src/main/res/layout/fragment_chats.xml" value="0.1933876811594203" />
+        <entry key="..\:/Amikom/Semester 5/REKAYASA PERANGKAT LUNAK/FinalProject/ChatApp/app/src/main/res/layout/fragment_users.xml" value="0.1933876811594203" />
         <entry key="..\:/Amikom/Semester 5/REKAYASA PERANGKAT LUNAK/FinalProject/ChatApp/app/src/main/res/layout/layout_bar.xml" value="0.22447916666666667" />
+        <entry key="..\:/Amikom/Semester 5/REKAYASA PERANGKAT LUNAK/FinalProject/ChatApp/app/src/main/res/layout/user_item.xml" value="0.1933876811594203" />
         <entry key="..\:/Amikom/Semester 5/REKAYASA PERANGKAT LUNAK/FinalProject/ChatApp/app/src/main/res/menu/menu.xml" value="0.209375" />
+        <entry key="..\:/Amikom/Semester 5/REKAYASA PERANGKAT LUNAK/FinalProject/ChatApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.22205128205128205" />
       </map>
     </option>
   </component>
