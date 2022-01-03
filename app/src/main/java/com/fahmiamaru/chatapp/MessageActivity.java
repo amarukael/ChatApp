@@ -39,6 +39,7 @@ public class MessageActivity extends AppCompatActivity {
 
     ImageButton btn_Send;
     EditText text_Send;
+    User user;
 
     Intent intent;
 
@@ -81,19 +82,20 @@ public class MessageActivity extends AppCompatActivity {
             }
         });
 
-
         reference = FirebaseDatabase.getInstance().getReference().child("Users").child(userid);
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                User user = snapshot.getValue(User.class);
-                user.setKey(snapshot.getKey());
-                username.setText(user.getUsername());
-                if (user.getImageURL().equals("default")){
-                    profile_img.setImageResource(R.mipmap.ic_launcher);
-                } else {
-                    Glide.with(MessageActivity.this).load(user.getImageURL()).into(profile_img);
+                for (DataSnapshot item : snapshot.getChildren()){
+                    user = item.getValue(User.class);
+                    user.setKey(item.getKey());
+                    username.setText(user.getUsername());
+                    if (user.getImageURL().equals("default")){
+                        profile_img.setImageResource(R.mipmap.ic_launcher);
+                    } else {
+                        Glide.with(MessageActivity.this).load(user.getImageURL()).into(profile_img);
+                    }
                 }
             }
 
