@@ -115,7 +115,7 @@ public class MessageActivity extends AppCompatActivity {
         hashMap.put("receiver", receiver);
         hashMap.put("message", message);
 
-        reference1.child("chats").push().setValue(hashMap);
+        reference1.child("Chats").push().setValue(hashMap);
 
     }
 }
