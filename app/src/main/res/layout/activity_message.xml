@@ -61,6 +61,8 @@
             android:layout_toLeftOf="@id/btn_send"
             android:layout_centerVertical="true"
             android:hint="Type a message..."
+            android:textColorHint="@color/grey"
+            android:textColor="@color/black"
             />
 
         <ImageButton

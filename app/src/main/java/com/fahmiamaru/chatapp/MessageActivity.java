@@ -5,6 +5,8 @@ import static android.content.ContentValues.TAG;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.fahmiamaru.chatapp.Adapter.MessageAdapter;
+import com.fahmiamaru.chatapp.Model.Chat;
 import com.fahmiamaru.chatapp.Model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -25,7 +29,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -43,6 +49,11 @@ public class MessageActivity extends AppCompatActivity {
 
     Intent intent;
 
+    MessageAdapter messageAdapter;
+    List<Chat> mchat;
+
+    RecyclerView recyclerView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +69,12 @@ public class MessageActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        recyclerView = findViewById(R.id.recycler_view);
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        linearLayoutManager.setStackFromEnd(true);
+        recyclerView.setLayoutManager(linearLayoutManager);
 
         profile_img = findViewById(R.id.profile_img);
         username = findViewById(R.id.username);
@@ -88,7 +105,7 @@ public class MessageActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot item : snapshot.getChildren()){
-                    user = item.getValue(User.class);
+                    User user = item.getValue(User.class);
                     user.setKey(item.getKey());
                     username.setText(user.getUsername());
                     if (user.getImageURL().equals("default")){
@@ -96,6 +113,8 @@ public class MessageActivity extends AppCompatActivity {
                     } else {
                         Glide.with(MessageActivity.this).load(user.getImageURL()).into(profile_img);
                     }
+
+                    readMessage(fuser.getUid(), userid , user.getImageURL());
                 }
             }
 
@@ -117,5 +136,32 @@ public class MessageActivity extends AppCompatActivity {
 
         reference1.child("Chats").push().setValue(hashMap);
 
+    }
+
+    private void readMessage(String myid, String userid, String imageurl){
+        mchat = new ArrayList<>();
+        reference = FirebaseDatabase.getInstance().getReference().child("Chats");
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                mchat.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                        Chat chat = dataSnapshot.getValue(Chat.class);
+                        if (chat.getReceiver().equals(myid) && chat.getSender().equals(userid)||
+                                chat.getReceiver().equals(userid)&& chat.getSender().equals(myid)){
+                            mchat.add(chat);
+                        }
+
+                        messageAdapter = new MessageAdapter(MessageActivity.this, mchat, imageurl);
+                        recyclerView.setAdapter(messageAdapter);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+        reference.addValueEventListener(valueEventListener);
     }
 }

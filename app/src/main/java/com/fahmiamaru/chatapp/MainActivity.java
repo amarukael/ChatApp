@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+
                 for (DataSnapshot item : snapshot.getChildren()){
                     User user = item.getValue(User.class);
                     user.setKey(item.getKey());
