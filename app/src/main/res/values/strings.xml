@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">ChatApp</string>
+    <string name="app_name">SenJaw</string>
     <string name="sign_in">Sign In</string>
-    <string name="chat_app">Chat App</string>
+    <string name="chat_app">SenJaw</string>
     <string name="login">login</string>
     <string name="register">Register</string>
     <string name="logo">Logo</string>
@@ -14,4 +14,6 @@
     <string name="sign_up">Sign Up</string>
     <string name="keep_me_sign_in">Keep me sign in?</string>
     <string name="forgot_password">Forgot Password?</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
