@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/senjaw"
     android:background="@color/white"
     android:gravity="center"
     tools:context=".StartActivity">
@@ -21,8 +22,9 @@
     <Button
         android:layout_width="200dp"
         android:layout_height="40dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="180dp"
         android:background="@drawable/rounded_corner"
+        android:fontFamily="@font/preg"
         android:id="@+id/login"
         android:text="@string/login"
         />
@@ -31,6 +33,7 @@
         android:id="@+id/register"
         android:layout_width="200dp"
         android:layout_height="40dp"
+        android:fontFamily="@font/preg"
         android:background="@drawable/rounded_corner"
         android:layout_marginTop="20dp"
         android:text="@string/register" />
