@@ -31,6 +31,7 @@
                 android:layout_marginLeft="25dp"
                 android:fontFamily="@font/preg"
                 android:text="SenJaw"
+                android:text="default"
                 android:textStyle="bold"
                 android:layout_marginStart="25dp"
                 android:textColor="@color/white"
