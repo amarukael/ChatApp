@@ -29,9 +29,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.SecretKeySpec;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -53,6 +62,10 @@ public class MessageActivity extends AppCompatActivity {
     List<Chat> mchat;
 
     RecyclerView recyclerView;
+
+    private byte encryptionKey[] = {9, 115, 51, 86, 105, 4, -31, -23, -68, 88, 17, 20, 3, -105, 119, -53};
+    private Cipher cipher, decipher;
+    private SecretKeySpec secretKeySpec;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,12 +99,23 @@ public class MessageActivity extends AppCompatActivity {
         String userid = intent.getStringExtra("userid");
         fuser = FirebaseAuth.getInstance().getCurrentUser();
 
+        try {
+            cipher = Cipher.getInstance("AES");
+            decipher = Cipher.getInstance("AES");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (NoSuchPaddingException e) {
+            e.printStackTrace();
+        }
+
+        secretKeySpec = new SecretKeySpec(encryptionKey, "AES");
+
         btn_Send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String msg = text_Send.getText().toString();
                 if (!msg.equals("")){
-                    sendMessage(fuser.getUid(), userid, msg);
+                    sendMessage(fuser.getUid(), userid, AESEncryptionMethod(msg));
                 }else {
                     Toast.makeText(MessageActivity.this, "Type something", Toast.LENGTH_SHORT).show();
                 }
@@ -113,7 +137,6 @@ public class MessageActivity extends AppCompatActivity {
                     } else {
                         Glide.with(MessageActivity.this).load(user.getImageURL()).into(profile_img);
                     }
-
                     readMessage(fuser.getUid(), userid , user.getImageURL());
                 }
             }
@@ -135,7 +158,6 @@ public class MessageActivity extends AppCompatActivity {
         hashMap.put("message", message);
 
         reference1.child("Chats").push().setValue(hashMap);
-
     }
 
     private void readMessage(String myid, String userid, String imageurl){
@@ -163,5 +185,31 @@ public class MessageActivity extends AppCompatActivity {
             }
         };
         reference.addValueEventListener(valueEventListener);
+    }
+
+    private String AESEncryptionMethod(String string){
+
+        byte[] stringByte = string.getBytes();
+        byte[] encryptedByte = new byte[stringByte.length];
+
+        try {
+            cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec);
+            encryptedByte = cipher.doFinal(stringByte);
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        } catch (BadPaddingException e) {
+            e.printStackTrace();
+        } catch (IllegalBlockSizeException e) {
+            e.printStackTrace();
+        }
+
+        String returnString = null;
+
+        try {
+            returnString = new String(encryptedByte, "ISO-8859-1");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return returnString;
     }
 }

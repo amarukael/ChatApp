@@ -2,6 +2,7 @@ package com.fahmiamaru.chatapp.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,17 @@ import com.fahmiamaru.chatapp.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.List;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.SecretKeySpec;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHolder> {
 
@@ -28,6 +39,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     private Context mContext;
     private List<Chat> mChat;
     private String imgurl;
+    private byte encryptionKey[] = {9, 115, 51, 86, 105, 4, -31, -23, -68, 88, 17, 20, 3, -105, 119, -53};
+    private Cipher cipher, decipher;
+    private SecretKeySpec secretKeySpec;
 
     FirebaseUser firebaseUser;
 
@@ -50,9 +64,25 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MessageAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Chat chat = mChat.get(position);
-        holder.show_msg.setText(chat.getMessage());
+
+        try {
+            cipher = Cipher.getInstance("AES");
+            decipher = Cipher.getInstance("AES");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (NoSuchPaddingException e) {
+            e.printStackTrace();
+        }
+
+        secretKeySpec = new SecretKeySpec(encryptionKey, "AES");
+
+        try {
+            holder.show_msg.setText(AESDecryptionMethod(chat.getMessage()));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         if (holder.profile_img != null){
             if (imgurl.equals("default")){
                 holder.profile_img.setImageResource(R.mipmap.ic_launcher);
@@ -88,5 +118,25 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         } else {
             return MSG_TYPE_LEFT;
         }
+    }
+
+    private String AESDecryptionMethod(String string) throws UnsupportedEncodingException {
+        byte[] EncryptedByte = string.getBytes("ISO-8859-1");
+        String decryptedString = string;
+
+        byte[] decryption;
+
+        try {
+            decipher.init(cipher.DECRYPT_MODE, secretKeySpec);
+            decryption = decipher.doFinal(EncryptedByte);
+            decryptedString = new String(decryption);
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        } catch (BadPaddingException e) {
+            e.printStackTrace();
+        } catch (IllegalBlockSizeException e) {
+            e.printStackTrace();
+        }
+        return decryptedString;
     }
 }
