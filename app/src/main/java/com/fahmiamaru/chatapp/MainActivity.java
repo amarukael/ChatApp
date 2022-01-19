@@ -32,6 +32,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -43,8 +44,6 @@ public class MainActivity extends AppCompatActivity {
     FirebaseUser firebaseUser;
     DatabaseReference reference;
 
-    User user;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("");
 
         profile_img = findViewById(R.id.profile_img);
         username = findViewById(R.id.username);
@@ -68,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
                 for (DataSnapshot item : snapshot.getChildren()){
                     User user = item.getValue(User.class);
+                    assert user != null;
                     user.setKey(item.getKey());
                     username.setText(user.getUsername());
                     if (user.getImageURL().equals("default")){
@@ -86,24 +86,6 @@ public class MainActivity extends AppCompatActivity {
 
         reference.addValueEventListener(valueEventListener);
 
-
-//        reference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                User user = snapshot.getValue(User.class);
-//                username.setText(user.getUsername());
-//                if (user.getImageURL()=="default"){
-//                    profile_img.setImageResource(R.mipmap.ic_launcher);
-//                } else {
-//                    Glide.with(MainActivity.this).load(user.getImageURL()).into(profile_img);
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                Log.w("TAG", "Failed to read value.", error.toException());
-//            }
-//        });
 
         TabLayout tabLayout = findViewById(R.id.tab_layout);
         ViewPager viewPager = findViewById(R.id.view_pager);
@@ -127,21 +109,20 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.logout:
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(MainActivity.this, StartActivity.class));
-                finish();
+        if (item.getItemId() == R.id.logout) {
+            FirebaseAuth.getInstance().signOut();
+            startActivity(new Intent(MainActivity.this, StartActivity.class));
+            finish();
 
-                return true;
+            return true;
         }
         return false;
     }
 
-    class ViewPagerAdapter extends FragmentPagerAdapter{
+    static class ViewPagerAdapter extends FragmentPagerAdapter{
 
-        private ArrayList<Fragment> fragments;
-        private ArrayList<String> titles;
+        private final ArrayList<Fragment> fragments;
+        private final ArrayList<String> titles;
 
         ViewPagerAdapter(FragmentManager fm){
             super(fm);

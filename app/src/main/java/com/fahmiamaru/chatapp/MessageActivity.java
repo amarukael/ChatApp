@@ -2,20 +2,20 @@ package com.fahmiamaru.chatapp;
 
 import static android.content.ContentValues.TAG;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.fahmiamaru.chatapp.Adapter.MessageAdapter;
@@ -29,12 +29,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -54,7 +55,6 @@ public class MessageActivity extends AppCompatActivity {
 
     ImageButton btn_Send;
     EditText text_Send;
-    User user;
 
     Intent intent;
 
@@ -63,10 +63,11 @@ public class MessageActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
 
-    private byte encryptionKey[] = {9, 115, 51, 86, 105, 4, -31, -23, -68, 88, 17, 20, 3, -105, 119, -53};
-    private Cipher cipher, decipher;
+    private final byte[] encryptionKey = {9, 115, 51, 86, 105, 4, -31, -23, -68, 88, 17, 20, 3, -105, 119, -53};
+    private Cipher cipher;
     private SecretKeySpec secretKeySpec;
 
+    @SuppressLint("GetInstance")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,14 +75,9 @@ public class MessageActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> finish());
 
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
@@ -101,26 +97,21 @@ public class MessageActivity extends AppCompatActivity {
 
         try {
             cipher = Cipher.getInstance("AES");
-            decipher = Cipher.getInstance("AES");
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (NoSuchPaddingException e) {
+            Cipher.getInstance("AES");
+        } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
             e.printStackTrace();
         }
 
         secretKeySpec = new SecretKeySpec(encryptionKey, "AES");
 
-        btn_Send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String msg = text_Send.getText().toString();
-                if (!msg.equals("")){
-                    sendMessage(fuser.getUid(), userid, AESEncryptionMethod(msg));
-                }else {
-                    Toast.makeText(MessageActivity.this, "Type something", Toast.LENGTH_SHORT).show();
-                }
-                text_Send.setText("");
+        btn_Send.setOnClickListener(v -> {
+            String msg = text_Send.getText().toString();
+            if (!msg.equals("")){
+                sendMessage(fuser.getUid(), userid, AESEncryptionMethod(msg));
+            }else {
+                Toast.makeText(MessageActivity.this, "Type something", Toast.LENGTH_SHORT).show();
             }
+            text_Send.setText("");
         });
 
         reference = FirebaseDatabase.getInstance().getReference().child("Users").child(userid);
@@ -130,6 +121,7 @@ public class MessageActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot item : snapshot.getChildren()){
                     User user = item.getValue(User.class);
+                    assert user != null;
                     user.setKey(item.getKey());
                     username.setText(user.getUsername());
                     if (user.getImageURL().equals("default")){
@@ -169,7 +161,8 @@ public class MessageActivity extends AppCompatActivity {
                 mchat.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                         Chat chat = dataSnapshot.getValue(Chat.class);
-                        if (chat.getReceiver().equals(myid) && chat.getSender().equals(userid)||
+                    assert chat != null;
+                    if (chat.getReceiver().equals(myid) && chat.getSender().equals(userid)||
                                 chat.getReceiver().equals(userid)&& chat.getSender().equals(myid)){
                             mchat.add(chat);
                         }
@@ -195,21 +188,13 @@ public class MessageActivity extends AppCompatActivity {
         try {
             cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec);
             encryptedByte = cipher.doFinal(stringByte);
-        } catch (InvalidKeyException e) {
-            e.printStackTrace();
-        } catch (BadPaddingException e) {
-            e.printStackTrace();
-        } catch (IllegalBlockSizeException e) {
+        } catch (InvalidKeyException | BadPaddingException | IllegalBlockSizeException e) {
             e.printStackTrace();
         }
 
-        String returnString = null;
+        String returnString;
 
-        try {
-            returnString = new String(encryptedByte, "ISO-8859-1");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        returnString = new String(encryptedByte, StandardCharsets.ISO_8859_1);
         return returnString;
     }
 }
